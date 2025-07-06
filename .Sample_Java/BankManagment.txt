@@ -1,0 +1,82 @@
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        String[] name = {"A", "B", "C"};
+        String[] accno = {"AC001", "AC002", "AC003"};
+        int[] total = {0, 0, 0};
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("OUR Bank management System:");
+        System.out.print("Enter your name: ");
+        String uname = sc.next();
+        System.out.print("Enter your account number: ");
+        String acno = sc.next();
+
+        boolean match = false;
+
+        for (int i = 0; i < name.length; i++) {
+            if (uname.equals(name[i]) && acno.equals(accno[i])) {
+                match = true;
+                System.out.println("\n**** Successfully you got access ****");
+
+                int choice;
+                do {
+                    System.out.println("\nWelcome to MY BANK:");
+                    System.out.println("1. Credit");
+                    System.out.println("2. Debit");
+                    System.out.println("3. Balance");
+                    System.out.println("4. Exit");
+                    System.out.print("** Select your choice: ");
+                    choice = sc.nextInt();
+
+                    switch (choice) {
+                        case 1:
+                            total[i] = credits(total[i]);
+                            System.out.println("\n** Successfully Credited **");
+                            System.out.println("Now Your balance is: " + total[i]);
+                            break;
+                        case 2:
+                            total[i] = debits(total[i]);
+                            System.out.println("Now Your balance is: " + total[i]);
+                            break;
+                        case 3:
+                            System.out.println("Your Balance is: " + total[i]);
+                            break;
+                        case 4:
+                            System.out.println("Thank you for banking with us!");
+                            break;
+                        default:
+                            System.out.println("Invalid choice. Try again.");
+                    }
+
+                } while (choice != 4);
+                break; // Exit after valid login and transaction loop
+            }
+        }
+
+        if (!match) {
+            System.out.println("**** Check your name or account number ****");
+        }
+    }
+
+    public static int credits(int bal) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the amount to credit: ");
+        int cred = sc.nextInt();
+        return bal + cred;
+    }
+
+    public static int debits(int bal) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the amount to debit: ");
+        int deb = sc.nextInt();
+        if (deb > bal) {
+            System.out.println("No sufficient balance. Your balance is: " + bal);
+        } else {
+            System.out.println("** Successfully Debited **");
+            bal -= deb;
+        }
+        return bal;
+    }
+}
